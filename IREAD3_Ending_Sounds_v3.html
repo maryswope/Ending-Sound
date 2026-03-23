@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IREAD-3 Ending Sounds</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:#f0fff4;min-height:100vh;padding:14px;}
+
+h1{font-family:'Fredoka One',cursive;text-align:center;font-size:2rem;color:#1a5c2e;margin-bottom:3px;}
+.subtitle{text-align:center;color:#888;font-size:0.88rem;margin-bottom:16px;}
+
+.teacher-panel{max-width:680px;margin:0 auto 16px;border-radius:14px;overflow:hidden;border:2px solid #9ae6b4;}
+.teacher-header{background:#2b8a3e;color:white;padding:9px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
+.teacher-header h2{font-family:'Fredoka One',cursive;font-size:1rem;}
+.teacher-body{padding:14px 18px;display:none;background:#f0fff4;}
+.teacher-body.open{display:block;}
+.teacher-body h3{font-size:0.82rem;color:#1a5c2e;margin:10px 0 3px;text-transform:uppercase;letter-spacing:0.5px;}
+.teacher-body p,.teacher-body li{font-size:0.84rem;color:#333;line-height:1.6;}
+.teacher-body ul{padding-left:16px;margin-top:3px;}
+.standard-box{background:white;border-left:4px solid #2b8a3e;border-radius:6px;padding:7px 11px;margin-top:5px;font-size:0.82rem;color:#444;line-height:1.5;}
+.sound-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.sound-tag{background:#c6f6d5;color:#1a5c2e;border-radius:50px;padding:2px 10px;font-size:0.78rem;font-weight:800;}
+
+.controls-bar{max-width:680px;margin:0 auto 12px;background:white;border-radius:14px;padding:10px 16px;box-shadow:0 2px 10px rgba(0,0,0,0.06);border:2px solid #c6f6d5;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;}
+.ctrl-item{display:flex;align-items:center;gap:8px;}
+.ctrl-label{font-size:0.82rem;font-weight:800;color:#1a5c2e;}
+.ctrl-desc{font-size:0.74rem;color:#999;}
+.toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:50px;cursor:pointer;transition:background 0.2s;}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:white;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.toggle-wrap input:checked+.toggle-slider{background:#2b8a3e;}
+.toggle-wrap input:checked+.toggle-slider::before{transform:translateX(20px);}
+body.hint-off .end-hl{color:#1a5c2e!important;text-decoration:none!important;}
+
+.score-bar{display:flex;justify-content:space-between;align-items:center;max-width:680px;margin:0 auto 12px;background:white;border-radius:14px;padding:10px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.06);border:2px solid #c6f6d5;flex-wrap:wrap;gap:6px;}
+.score-item{text-align:center;}
+.score-num{font-family:'Fredoka One',cursive;font-size:1.5rem;color:#1a5c2e;}
+.score-label{font-size:0.7rem;color:#999;font-weight:700;text-transform:uppercase;}
+select{font-family:'Nunito',sans-serif;font-size:0.85rem;padding:7px 12px;border-radius:50px;border:2px solid #9ae6b4;background:white;color:#333;font-weight:700;cursor:pointer;}
+.word-badge{background:#f0fff4;border:1.5px solid #9ae6b4;border-radius:50px;padding:3px 12px;font-size:0.78rem;color:#1a5c2e;font-weight:800;}
+
+.quiz-card{background:white;border-radius:20px;padding:22px;max-width:680px;margin:0 auto 14px;box-shadow:0 6px 20px rgba(0,0,0,0.08);border:3px solid #c6f6d5;}
+.progress-wrap{background:#eee;border-radius:50px;height:10px;margin-bottom:10px;overflow:hidden;}
+.progress-bar{height:100%;border-radius:50px;background:linear-gradient(90deg,#2b8a3e,#68d391);transition:width 0.4s ease;}
+.q-label{font-size:0.78rem;color:#999;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+
+.target-zone{border-radius:16px;padding:18px 20px;margin-bottom:14px;text-align:center;border:2px dashed #2b8a3e;background:#f0fff4;}
+.target-prompt{font-size:0.9rem;color:#666;margin-bottom:12px;}
+
+.speak-btn{display:inline-flex;align-items:center;gap:10px;background:#2b8a3e;color:white;border:none;border-radius:50px;padding:13px 26px;font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 0 #155724;letter-spacing:0.5px;margin-bottom:12px;transition:all 0.15s;}
+.speak-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #155724;}
+@keyframes greenpulse{0%{box-shadow:0 4px 0 #155724;}50%{box-shadow:0 4px 18px rgba(43,138,62,0.6),0 4px 0 #155724;}100%{box-shadow:0 4px 0 #155724;}}
+.speak-btn.speaking{animation:greenpulse 0.7s ease-in-out infinite;}
+
+.repeat-counter{font-size:0.78rem;color:#aaa;margin-bottom:8px;font-weight:700;min-height:20px;}
+.repeat-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#c6f6d5;margin:0 2px;transition:background 0.2s;}
+.repeat-dot.lit{background:#2b8a3e;}
+
+.word-reveal-wrap{margin-top:6px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.target-word{font-family:'Fredoka One',cursive;font-size:2.2rem;letter-spacing:2px;color:#1a5c2e;min-height:52px;}
+.target-word.hidden{opacity:0;pointer-events:none;user-select:none;}
+.target-sound{font-size:0.82rem;color:#aaa;}
+.target-sound.hidden{opacity:0;}
+.show-word-btn{background:#f0fff4;color:#1a5c2e;border:2px solid #9ae6b4;border-radius:50px;padding:7px 18px;font-family:'Fredoka One',cursive;font-size:0.95rem;cursor:pointer;transition:all 0.15s;}
+.show-word-btn:hover{background:#c6f6d5;}
+.show-word-btn.gone{display:none;}
+.end-hl{color:#e53e3e;text-decoration:underline;text-underline-offset:4px;}
+
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.choice-btn{font-family:'Fredoka One',cursive;font-size:1.35rem;padding:15px 10px;border-radius:14px;border:3px solid #e0e0e0;background:#fafafa;cursor:pointer;transition:all 0.15s;color:#333;text-align:center;position:relative;}
+.choice-btn:hover:not(:disabled){border-color:#2b8a3e;background:#f0fff4;transform:scale(1.03);}
+.choice-lbl{position:absolute;top:5px;left:9px;font-size:0.72rem;color:#bbb;}
+.choice-btn.correct{background:#d4f5e2;border-color:#38a169;color:#1a7a3f;}
+.choice-btn.wrong{background:#fde8e8;border-color:#e05252;color:#a33;}
+.choice-btn:disabled{cursor:default;}
+.feedback{text-align:center;font-size:1.05rem;font-weight:800;min-height:26px;margin-bottom:10px;color:#333;}
+.feedback.correct{color:#38a169;}
+.feedback.wrong{color:#e05252;}
+.hint-box{background:#f0fff4;border-radius:10px;padding:7px 14px;font-size:0.8rem;color:#1a5c2e;margin-bottom:12px;font-weight:700;text-align:center;}
+.btn{font-family:'Fredoka One',cursive;font-size:0.95rem;padding:9px 20px;border:none;border-radius:50px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,0.14);transition:transform 0.1s,box-shadow 0.1s;}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,0.14);}
+.btn-next{background:#2b8a3e;color:white;}
+.btn-reset{background:#bbb;color:white;}
+.result-screen{text-align:center;max-width:680px;margin:0 auto;background:white;border-radius:20px;padding:36px 24px;box-shadow:0 6px 20px rgba(0,0,0,0.08);border:3px solid #c6f6d5;}
+.result-emoji{font-size:4rem;margin-bottom:10px;}
+.result-title{font-family:'Fredoka One',cursive;font-size:1.9rem;color:#1a5c2e;margin-bottom:6px;}
+.result-score{font-size:1.1rem;color:#555;margin-bottom:18px;}
+.footer{text-align:center;color:#ccc;font-size:0.72rem;margin-top:18px;padding-bottom:10px;}
+</style>
+</head>
+<body>
+
+<h1>🎯 Ending Sounds Quiz</h1>
+<p class="subtitle">IREAD-3 Phonics Practice &bull; Ending Sounds</p>
+
+<div class="teacher-panel">
+  <div class="teacher-header" onclick="toggleInstr()"><h2>📋 Teacher Instructions &amp; Settings</h2><span id="arrow">▼ Show</span></div>
+  <div class="teacher-body" id="instrBody">
+    <h3>📌 Purpose</h3>
+    <p>Students practice identifying <strong>ending sounds</strong>. The target word is <strong>read aloud 3 times automatically</strong> — students listen to how the word ends before choosing their answer, just like the real IREAD-3 assessment.</p>
+    <h3>📐 Standard: RF.3.3.a</h3>
+    <div class="standard-box">Use letter-sound knowledge of consonant blends and digraphs to decode phonetically regular words, independent of context.</div>
+    <h3>🎤 How Audio Works</h3>
+    <ul>
+      <li>The word is spoken <strong>3 times automatically</strong> when each question loads. Three dots ● ● ● track the count.</li>
+      <li>Tap 🔊 to hear it again as many times as needed.</li>
+      <li>The word is hidden — students click <strong>👁 Show Word</strong> to reveal it.</li>
+    </ul>
+    <h3>🎛️ Teacher Toggles</h3>
+    <ul>
+      <li><strong>👁 Show Word Button</strong> — turn OFF to remove the hint option.</li>
+      <li><strong>🎨 Ending Hint</strong> — when ON, the ending letters are underlined in red after revealing.</li>
+    </ul>
+    <h3>🔤 Ending Sounds Covered</h3>
+    <div class="sound-grid">
+      <span class="sound-tag">-mp</span><span class="sound-tag">-sh</span><span class="sound-tag">-st</span><span class="sound-tag">-ll</span><span class="sound-tag">-ss</span><span class="sound-tag">-ck</span><span class="sound-tag">-nt</span><span class="sound-tag">-ng</span><span class="sound-tag">-nd</span><span class="sound-tag">-nk</span><span class="sound-tag">-d</span><span class="sound-tag">-p</span><span class="sound-tag">-t</span><span class="sound-tag">-n</span><span class="sound-tag">-ff</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls-bar">
+  <div class="ctrl-item">
+    <span class="ctrl-label">👁 Show Word Button</span>
+    <label class="toggle-wrap"><input type="checkbox" id="showToggle" checked onchange="applyToggles()"><span class="toggle-slider"></span></label>
+    <span class="ctrl-desc" id="showDesc">ON</span>
+  </div>
+  <div class="ctrl-item">
+    <span class="ctrl-label">🎨 Ending Hint</span>
+    <label class="toggle-wrap"><input type="checkbox" id="hintToggle" checked onchange="applyToggles()"><span class="toggle-slider"></span></label>
+    <span class="ctrl-desc" id="hintDesc">ON — ending underlined</span>
+  </div>
+</div>
+
+<div class="score-bar">
+  <div class="score-item"><div class="score-num" id="sCorrect">0</div><div class="score-label">Correct ✅</div></div>
+  <div class="score-item"><div class="score-num" id="sWrong">0</div><div class="score-label">Missed ❌</div></div>
+  <div class="score-item"><div class="score-num" id="sLeft">—</div><div class="score-label">Remaining</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+    <select id="modeSelect" onchange="reset()">
+      <option value="10">Practice (10 Q)</option>
+      <option value="20">Medium (20 Q)</option>
+      <option value="40">Long (40 Q)</option>
+      <option value="all">Full Quiz (All)</option>
+    </select>
+    <span class="word-badge" id="wBadge">300+ words</span>
+  </div>
+</div>
+
+<div id="quizArea"></div>
+<div style="text-align:center;max-width:680px;margin:0 auto 6px;"><button class="btn btn-reset" onclick="reset()">🔄 Start Over</button></div>
+<div class="footer">IREAD-3 Ending Sounds &bull; Grade 3 &bull; 300+ Words &bull; No Student Data Collected</div>
+
+<script>
+const allWords = [
+  {w:"PUMP",end:"mp"},{w:"JUMP",end:"mp"},{w:"DAMP",end:"mp"},{w:"CAMP",end:"mp"},{w:"STAMP",end:"mp"},{w:"THUMP",end:"mp"},{w:"PLUMP",end:"mp"},{w:"CLAMP",end:"mp"},{w:"BUMP",end:"mp"},{w:"DUMP",end:"mp"},{w:"CHIMP",end:"mp"},{w:"LIMP",end:"mp"},{w:"RAMP",end:"mp"},{w:"ROMP",end:"mp"},{w:"STOMP",end:"mp"},{w:"STUMP",end:"mp"},{w:"SWAMP",end:"mp"},{w:"CHOMP",end:"mp"},{w:"CLUMP",end:"mp"},{w:"CRAMP",end:"mp"},{w:"GRUMP",end:"mp"},{w:"SLUMP",end:"mp"},
+  {w:"FISH",end:"sh"},{w:"CASH",end:"sh"},{w:"WISH",end:"sh"},{w:"DISH",end:"sh"},{w:"RUSH",end:"sh"},{w:"BRUSH",end:"sh"},{w:"GUSH",end:"sh"},{w:"BLUSH",end:"sh"},{w:"SWISH",end:"sh"},{w:"CRUSH",end:"sh"},{w:"FLUSH",end:"sh"},{w:"HASH",end:"sh"},{w:"LASH",end:"sh"},{w:"MASH",end:"sh"},{w:"RASH",end:"sh"},{w:"SLASH",end:"sh"},{w:"SMASH",end:"sh"},{w:"STASH",end:"sh"},{w:"TRASH",end:"sh"},{w:"CLASH",end:"sh"},{w:"CRASH",end:"sh"},{w:"FLASH",end:"sh"},{w:"PLUSH",end:"sh"},{w:"SLUSH",end:"sh"},{w:"PUSH",end:"sh"},{w:"BUSH",end:"sh"},{w:"BRASH",end:"sh"},
+  {w:"BEST",end:"st"},{w:"FAST",end:"st"},{w:"TEST",end:"st"},{w:"PAST",end:"st"},{w:"NEST",end:"st"},{w:"LAST",end:"st"},{w:"CAST",end:"st"},{w:"PEST",end:"st"},{w:"REST",end:"st"},{w:"MAST",end:"st"},{w:"QUEST",end:"st"},{w:"BLAST",end:"st"},{w:"CHEST",end:"st"},{w:"DUST",end:"st"},{w:"FIST",end:"st"},{w:"FROST",end:"st"},{w:"GUST",end:"st"},{w:"HOST",end:"st"},{w:"JUST",end:"st"},{w:"LIST",end:"st"},{w:"LOST",end:"st"},{w:"MUST",end:"st"},{w:"POST",end:"st"},{w:"RUST",end:"st"},{w:"TRUST",end:"st"},{w:"VAST",end:"st"},{w:"WEST",end:"st"},{w:"ZEST",end:"st"},{w:"WRIST",end:"st"},
+  {w:"BALL",end:"ll"},{w:"BELL",end:"ll"},{w:"WELL",end:"ll"},{w:"FELL",end:"ll"},{w:"SPELL",end:"ll"},{w:"SHELL",end:"ll"},{w:"YELL",end:"ll"},{w:"TELL",end:"ll"},{w:"CALL",end:"ll"},{w:"TALL",end:"ll"},{w:"HALL",end:"ll"},{w:"WALL",end:"ll"},{w:"CELL",end:"ll"},{w:"CHILL",end:"ll"},{w:"DULL",end:"ll"},{w:"DRILL",end:"ll"},{w:"FILL",end:"ll"},{w:"FULL",end:"ll"},{w:"GRILL",end:"ll"},{w:"HILL",end:"ll"},{w:"HULL",end:"ll"},{w:"KILL",end:"ll"},{w:"MILL",end:"ll"},{w:"PILL",end:"ll"},{w:"PULL",end:"ll"},{w:"QUILL",end:"ll"},{w:"ROLL",end:"ll"},{w:"SELL",end:"ll"},{w:"SKILL",end:"ll"},{w:"SMELL",end:"ll"},{w:"SPILL",end:"ll"},{w:"STILL",end:"ll"},{w:"SWELL",end:"ll"},{w:"WILL",end:"ll"},
+  {w:"MESS",end:"ss"},{w:"MISS",end:"ss"},{w:"HISS",end:"ss"},{w:"BOSS",end:"ss"},{w:"LOSS",end:"ss"},{w:"TOSS",end:"ss"},{w:"BUS",end:"ss"},{w:"BLISS",end:"ss"},{w:"CLASS",end:"ss"},{w:"CROSS",end:"ss"},{w:"FUSS",end:"ss"},{w:"GLASS",end:"ss"},{w:"GRASS",end:"ss"},{w:"GROSS",end:"ss"},{w:"KISS",end:"ss"},{w:"LESS",end:"ss"},{w:"MASS",end:"ss"},{w:"MOSS",end:"ss"},{w:"PASS",end:"ss"},{w:"PRESS",end:"ss"},{w:"BLESS",end:"ss"},{w:"CHESS",end:"ss"},{w:"DRESS",end:"ss"},
+  {w:"ROCK",end:"ck"},{w:"LACK",end:"ck"},{w:"TICK",end:"ck"},{w:"PICK",end:"ck"},{w:"SICK",end:"ck"},{w:"CLICK",end:"ck"},{w:"BRICK",end:"ck"},{w:"BACK",end:"ck"},{w:"BLACK",end:"ck"},{w:"BLOCK",end:"ck"},{w:"BUCK",end:"ck"},{w:"CHECK",end:"ck"},{w:"CLOCK",end:"ck"},{w:"CRACK",end:"ck"},{w:"DECK",end:"ck"},{w:"DOCK",end:"ck"},{w:"DUCK",end:"ck"},{w:"FLICK",end:"ck"},{w:"HACK",end:"ck"},{w:"KICK",end:"ck"},{w:"KNOCK",end:"ck"},{w:"LOCK",end:"ck"},{w:"LICK",end:"ck"},{w:"LUCK",end:"ck"},{w:"MOCK",end:"ck"},{w:"NECK",end:"ck"},{w:"NICK",end:"ck"},{w:"PACK",end:"ck"},{w:"PLUCK",end:"ck"},{w:"QUICK",end:"ck"},{w:"RACK",end:"ck"},{w:"SHOCK",end:"ck"},{w:"SLACK",end:"ck"},{w:"SNACK",end:"ck"},{w:"SOCK",end:"ck"},{w:"STACK",end:"ck"},{w:"STICK",end:"ck"},{w:"STOCK",end:"ck"},{w:"THICK",end:"ck"},{w:"TRACK",end:"ck"},{w:"TRICK",end:"ck"},{w:"TRUCK",end:"ck"},{w:"TUCK",end:"ck"},
+  {w:"TENT",end:"nt"},{w:"HUNT",end:"nt"},{w:"BUNT",end:"nt"},{w:"BLUNT",end:"nt"},{w:"RUNT",end:"nt"},{w:"STUNT",end:"nt"},{w:"SHUNT",end:"nt"},{w:"BENT",end:"nt"},{w:"CHANT",end:"nt"},{w:"DENT",end:"nt"},{w:"FRONT",end:"nt"},{w:"GRANT",end:"nt"},{w:"GRUNT",end:"nt"},{w:"HINT",end:"nt"},{w:"MINT",end:"nt"},{w:"PAINT",end:"nt"},{w:"PLANT",end:"nt"},{w:"PRINT",end:"nt"},{w:"PUNT",end:"nt"},{w:"RANT",end:"nt"},{w:"RENT",end:"nt"},{w:"SCENT",end:"nt"},{w:"SENT",end:"nt"},{w:"SLANT",end:"nt"},{w:"SPENT",end:"nt"},{w:"VENT",end:"nt"},{w:"WANT",end:"nt"},{w:"WENT",end:"nt"},
+  {w:"KING",end:"ng"},{w:"LONG",end:"ng"},{w:"SONG",end:"ng"},{w:"STRONG",end:"ng"},{w:"WRONG",end:"ng"},{w:"BANG",end:"ng"},{w:"BRING",end:"ng"},{w:"CLING",end:"ng"},{w:"FANG",end:"ng"},{w:"FLING",end:"ng"},{w:"GANG",end:"ng"},{w:"GONG",end:"ng"},{w:"HANG",end:"ng"},{w:"HUNG",end:"ng"},{w:"LUNG",end:"ng"},{w:"RING",end:"ng"},{w:"RUNG",end:"ng"},{w:"SANG",end:"ng"},{w:"SING",end:"ng"},{w:"SLING",end:"ng"},{w:"STING",end:"ng"},{w:"STRING",end:"ng"},{w:"SUNG",end:"ng"},{w:"SWING",end:"ng"},{w:"THING",end:"ng"},{w:"WING",end:"ng"},{w:"ZING",end:"ng"},
+  {w:"SAND",end:"nd"},{w:"HAND",end:"nd"},{w:"STAND",end:"nd"},{w:"LAND",end:"nd"},{w:"GRAND",end:"nd"},{w:"WAND",end:"nd"},{w:"BAND",end:"nd"},{w:"BEND",end:"nd"},{w:"BIND",end:"nd"},{w:"BLEND",end:"nd"},{w:"BOND",end:"nd"},{w:"BRAND",end:"nd"},{w:"END",end:"nd"},{w:"FIND",end:"nd"},{w:"FOND",end:"nd"},{w:"GRIND",end:"nd"},{w:"HOUND",end:"nd"},{w:"KIND",end:"nd"},{w:"LEND",end:"nd"},{w:"MIND",end:"nd"},{w:"POND",end:"nd"},{w:"ROUND",end:"nd"},{w:"SEND",end:"nd"},{w:"SOUND",end:"nd"},{w:"SPEND",end:"nd"},{w:"TREND",end:"nd"},{w:"WIND",end:"nd"},
+  {w:"BANK",end:"nk"},{w:"BLANK",end:"nk"},{w:"BLINK",end:"nk"},{w:"CHUNK",end:"nk"},{w:"CLINK",end:"nk"},{w:"DRINK",end:"nk"},{w:"DUNK",end:"nk"},{w:"FUNK",end:"nk"},{w:"HANK",end:"nk"},{w:"JUNK",end:"nk"},{w:"LINK",end:"nk"},{w:"MINK",end:"nk"},{w:"PLANK",end:"nk"},{w:"PRANK",end:"nk"},{w:"RANK",end:"nk"},{w:"RINK",end:"nk"},{w:"SANK",end:"nk"},{w:"SINK",end:"nk"},{w:"SKUNK",end:"nk"},{w:"SPANK",end:"nk"},{w:"STINK",end:"nk"},{w:"SUNK",end:"nk"},{w:"TANK",end:"nk"},{w:"THANK",end:"nk"},{w:"THINK",end:"nk"},{w:"TRUNK",end:"nk"},{w:"WINK",end:"nk"},{w:"YANK",end:"nk"},
+  {w:"BED",end:"d"},{w:"SLED",end:"d"},{w:"BAD",end:"d"},{w:"BID",end:"d"},{w:"DAD",end:"d"},{w:"DID",end:"d"},{w:"FLED",end:"d"},{w:"HAD",end:"d"},{w:"HEAD",end:"d"},{w:"HID",end:"d"},{w:"KID",end:"d"},{w:"LEAD",end:"d"},{w:"MAD",end:"d"},{w:"MUD",end:"d"},{w:"READ",end:"d"},{w:"RED",end:"d"},{w:"ROD",end:"d"},{w:"SAD",end:"d"},{w:"SHED",end:"d"},{w:"SLID",end:"d"},{w:"TOAD",end:"d"},{w:"TROD",end:"d"},{w:"WED",end:"d"},
+  {w:"LIP",end:"p"},{w:"SHIP",end:"p"},{w:"MAP",end:"p"},{w:"CAP",end:"p"},{w:"COP",end:"p"},{w:"CUP",end:"p"},{w:"CHIP",end:"p"},{w:"CHOP",end:"p"},{w:"CLAP",end:"p"},{w:"CLIP",end:"p"},{w:"CROP",end:"p"},{w:"DRIP",end:"p"},{w:"DROP",end:"p"},{w:"FLAP",end:"p"},{w:"FLIP",end:"p"},{w:"FLOP",end:"p"},{w:"GAP",end:"p"},{w:"GRIP",end:"p"},{w:"HIP",end:"p"},{w:"HOP",end:"p"},{w:"LAP",end:"p"},{w:"MOP",end:"p"},{w:"NAP",end:"p"},{w:"POP",end:"p"},{w:"RAP",end:"p"},{w:"RIP",end:"p"},{w:"SKIP",end:"p"},{w:"SLAP",end:"p"},{w:"SLIP",end:"p"},{w:"SNIP",end:"p"},{w:"STOP",end:"p"},{w:"TAP",end:"p"},{w:"TIP",end:"p"},{w:"TOP",end:"p"},{w:"TRAP",end:"p"},{w:"TRIP",end:"p"},{w:"WHIP",end:"p"},{w:"ZIP",end:"p"},
+  {w:"CAT",end:"t"},{w:"BAT",end:"t"},{w:"BIT",end:"t"},{w:"BUT",end:"t"},{w:"CUT",end:"t"},{w:"DOT",end:"t"},{w:"FAT",end:"t"},{w:"FIT",end:"t"},{w:"FLAT",end:"t"},{w:"GRIT",end:"t"},{w:"GUT",end:"t"},{w:"HAT",end:"t"},{w:"HIT",end:"t"},{w:"HOT",end:"t"},{w:"HUT",end:"t"},{w:"KNIT",end:"t"},{w:"KNOT",end:"t"},{w:"LET",end:"t"},{w:"LIT",end:"t"},{w:"LOT",end:"t"},{w:"MAT",end:"t"},{w:"MET",end:"t"},{w:"NET",end:"t"},{w:"NOT",end:"t"},{w:"NUT",end:"t"},{w:"PAT",end:"t"},{w:"PET",end:"t"},{w:"PIT",end:"t"},{w:"POT",end:"t"},{w:"RAT",end:"t"},{w:"ROT",end:"t"},{w:"SAT",end:"t"},{w:"SET",end:"t"},{w:"SLOT",end:"t"},{w:"SPOT",end:"t"},{w:"SWAT",end:"t"},{w:"TROT",end:"t"},{w:"WET",end:"t"},
+  {w:"RAIN",end:"n"},{w:"SUN",end:"n"},{w:"PEN",end:"n"},{w:"BAN",end:"n"},{w:"BIN",end:"n"},{w:"BUN",end:"n"},{w:"CAN",end:"n"},{w:"CHIN",end:"n"},{w:"DEN",end:"n"},{w:"FAN",end:"n"},{w:"FIN",end:"n"},{w:"FUN",end:"n"},{w:"GUN",end:"n"},{w:"HEN",end:"n"},{w:"KIN",end:"n"},{w:"MAN",end:"n"},{w:"MOON",end:"n"},{w:"NUN",end:"n"},{w:"PAN",end:"n"},{w:"PIN",end:"n"},{w:"PLAN",end:"n"},{w:"RAN",end:"n"},{w:"RUN",end:"n"},{w:"SHIN",end:"n"},{w:"SKIN",end:"n"},{w:"SPIN",end:"n"},{w:"TAN",end:"n"},{w:"TEN",end:"n"},{w:"THIN",end:"n"},{w:"TIN",end:"n"},{w:"VAN",end:"n"},{w:"WIN",end:"n"},{w:"YEN",end:"n"},
+  {w:"PUFF",end:"ff"},{w:"BLUFF",end:"ff"},{w:"BUFF",end:"ff"},{w:"CLIFF",end:"ff"},{w:"CUFF",end:"ff"},{w:"FLUFF",end:"ff"},{w:"GRUFF",end:"ff"},{w:"HUFF",end:"ff"},{w:"MUFF",end:"ff"},{w:"OFF",end:"ff"},{w:"RIFF",end:"ff"},{w:"SCOFF",end:"ff"},{w:"SCUFF",end:"ff"},{w:"SNIFF",end:"ff"},{w:"STAFF",end:"ff"},{w:"STIFF",end:"ff"},{w:"STUFF",end:"ff"},{w:"WHIFF",end:"ff"}
+];
+
+const endLabels={mp:"Ending: -mp (JUMP)",sh:"Ending: -sh (FISH)",st:"Ending: -st (BEST)",ll:"Ending: -ll (BELL)",ss:"Ending: -ss (MESS)",ck:"Ending: -ck (ROCK)",nt:"Ending: -nt (TENT)",ng:"Ending: -ng (KING)",nd:"Ending: -nd (SAND)",nk:"Ending: -nk (BANK)",d:"Ending: -d (BED)",p:"Ending: -p (MAP)",t:"Ending: -t (CAT)",n:"Ending: -n (SUN)",ff:"Ending: -ff (PUFF)"};
+
+let questions=[],currentQ=0,scoreCorrect=0,scoreWrong=0,answered=false,wordVisible=false;
+const synth=window.speechSynthesis;
+
+function speakWord(word){
+  synth.cancel();
+  let count=0;
+  function say(){
+    if(count>=3)return;
+    count++;updateDots(count);
+    const u=new SpeechSynthesisUtterance(word.toLowerCase());
+    u.rate=0.82;u.pitch=1.05;u.lang='en-US';
+    u.onend=()=>setTimeout(say,520);
+    synth.speak(u);
+  }
+  say();
+}
+
+function updateDots(n){document.querySelectorAll('.repeat-dot').forEach((d,i)=>d.classList.toggle('lit',i<n));}
+
+function hlEnd(word,end){
+  const w=word.toUpperCase(),s=end.toUpperCase();
+  if(w.endsWith(s)) return w.slice(0,w.length-s.length)+`<span class="end-hl">${s}</span>`;
+  return w;
+}
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function dedupe(list){const s=new Set();return list.filter(x=>{const k=x.w+'|'+x.end;if(s.has(k))return false;s.add(k);return true;});}
+
+function buildQ(target,list){
+  const map={};list.forEach(x=>{if(!map[x.end])map[x.end]=[];map[x.end].push(x);});
+  const same=map[target.end].filter(x=>x.w!==target.w);
+  if(!same.length)return null;
+  const correct=shuffle(same)[0];
+  const others=shuffle(Object.keys(map).filter(k=>k!==target.end));
+  const dist=[];
+  for(const k of others){if(dist.length>=3)break;const p=shuffle(map[k])[0];if(p&&p.w!==target.w)dist.push(p);}
+  if(dist.length<3)return null;
+  return{target,correct,choices:shuffle([correct,...dist.slice(0,3)])};
+}
+
+function buildSet(){
+  const raw=dedupe(allWords);
+  const mode=document.getElementById('modeSelect').value;
+  const pool=mode==='all'?shuffle(raw):shuffle(raw).slice(0,parseInt(mode));
+  questions=pool.map(t=>buildQ(t,raw)).filter(Boolean);
+  document.getElementById('wBadge').textContent=raw.length+' words';
+}
+
+function updateScore(){
+  document.getElementById('sCorrect').textContent=scoreCorrect;
+  document.getElementById('sWrong').textContent=scoreWrong;
+  document.getElementById('sLeft').textContent=Math.max(0,questions.length-currentQ);
+}
+
+function showQ(){
+  if(currentQ>=questions.length){showResult();return;}
+  answered=false;wordVisible=false;
+  const q=questions[currentQ];
+  const showAllowed=document.getElementById('showToggle').checked;
+  const pct=(currentQ/questions.length*100).toFixed(0);
+  const hl=hlEnd(q.target.w,q.target.end);
+  const lbl=endLabels[q.target.end]||('Ending: -'+q.target.end);
+
+  document.getElementById('quizArea').innerHTML=`
+    <div class="quiz-card">
+      <div class="progress-wrap"><div class="progress-bar" id="pb" style="width:${pct}%"></div></div>
+      <div class="q-label">Question ${currentQ+1} of ${questions.length}</div>
+      <div class="target-zone">
+        <div class="target-prompt">Find the word with the same <strong>ending sound</strong> as:</div>
+        <button class="speak-btn" id="speakBtn" onclick="speakWord('${q.target.w}')">
+          <span style="font-size:1.4rem">🔊</span> Tap to Hear Again
+        </button>
+        <div class="repeat-counter">
+          <span class="repeat-dot" id="d0"></span><span class="repeat-dot" id="d1"></span><span class="repeat-dot" id="d2"></span>
+          &nbsp;word read count
+        </div>
+        <div class="word-reveal-wrap">
+          <div class="target-word hidden" id="tw">${hl}</div>
+          <div class="target-sound hidden" id="ts">${lbl}</div>
+        </div>
+        <button class="show-word-btn${showAllowed?'':' gone'}" id="swBtn" onclick="revealWord()">👁 Show Word</button>
+      </div>
+      <div class="hint-box">👂 Listen to how the word ENDS</div>
+      <div class="choices" id="choicesArea"></div>
+      <div class="feedback" id="fb"></div>
+      <div style="text-align:center"><button class="btn btn-next" id="nextBtn" style="display:none" onclick="nextQ()">Next Question →</button></div>
+    </div>`;
+
+  const area=document.getElementById('choicesArea');
+  ['a','b','c','d'].forEach((ltr,i)=>{
+    const btn=document.createElement('button');
+    btn.className='choice-btn';
+    btn.innerHTML=`<span class="choice-lbl">${ltr})</span>${q.choices[i].w}`;
+    btn.onclick=()=>selectAns(q.choices[i],btn,q);
+    area.appendChild(btn);
+  });
+
+  updateScore();
+  setTimeout(()=>speakWord(q.target.w),350);
+}
+
+function revealWord(){
+  wordVisible=true;
+  document.getElementById('tw').classList.remove('hidden');
+  document.getElementById('ts').classList.remove('hidden');
+  const sb=document.getElementById('swBtn');if(sb)sb.classList.add('gone');
+}
+
+function selectAns(item,btn,q){
+  if(answered)return;
+  answered=true;
+  revealWord();synth.cancel();
+  document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);
+  if(item.w===q.correct.w){
+    btn.classList.add('correct');
+    document.getElementById('fb').textContent='🌟 Great job! That\'s right!';
+    document.getElementById('fb').className='feedback correct';
+    scoreCorrect++;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b=>{if(b.textContent.replace(/^[abcd\)]/,'').trim()===q.correct.w)b.classList.add('correct');});
+    document.getElementById('fb').innerHTML=`❌ The answer was <strong>${q.correct.w}</strong> — both end with <strong>-${q.target.end}</strong>!`;
+    document.getElementById('fb').className='feedback wrong';
+    scoreWrong++;
+  }
+  updateScore();
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+
+function nextQ(){currentQ++;showQ();}
+
+function showResult(){
+  const total=questions.length,pct=Math.round(scoreCorrect/total*100);
+  const emoji=pct>=90?'🏆':pct>=70?'⭐':pct>=50?'💪':'🐣';
+  const msg=pct>=90?'Outstanding!':pct>=70?'Great Work!':pct>=50?'Keep Practicing!':'Let\'s Try Again!';
+  document.getElementById('quizArea').innerHTML=`<div class="result-screen"><div class="result-emoji">${emoji}</div><div class="result-title">${msg}</div><div class="result-score">You got <strong>${scoreCorrect} of ${total}</strong> correct (${pct}%)</div><button class="btn btn-next" onclick="reset()">🔄 Play Again</button></div>`;
+  document.getElementById('sLeft').textContent='0';
+}
+
+function applyToggles(){
+  const hOn=document.getElementById('hintToggle').checked;
+  const sOn=document.getElementById('showToggle').checked;
+  document.body.classList.toggle('hint-off',!hOn);
+  document.getElementById('hintDesc').textContent=hOn?'ON — ending underlined':'OFF — no highlight';
+  document.getElementById('showDesc').textContent=sOn?'ON':'OFF';
+  const sb=document.getElementById('swBtn');
+  if(sb)sb.classList.toggle('gone',!sOn||wordVisible);
+}
+
+function reset(){currentQ=0;scoreCorrect=0;scoreWrong=0;buildSet();updateScore();showQ();}
+function toggleInstr(){const b=document.getElementById('instrBody'),a=document.getElementById('arrow');b.classList.toggle('open');a.textContent=b.classList.contains('open')?'▲ Hide':'▼ Show';}
+
+buildSet();showQ();
+</script>
+</body>
+</html>
